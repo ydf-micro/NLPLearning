@@ -5,8 +5,8 @@ Version 1.0
 Update:
 '''
 
-from ngram.config import test_gold_path
-from ngram.config import test_result_path
+from config import test_gold_path
+from config import test_result_path
 
 class Evaluate():
     def __init__(self):
