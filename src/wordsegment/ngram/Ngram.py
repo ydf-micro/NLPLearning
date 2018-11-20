@@ -209,7 +209,7 @@ class Ngram():
                 else:
                     tmp_words += ' ' + sent
 
-            test_result_file.write(tmp_words + '\n')
+            test_result_file.write(tmp_words.strip() + '\n')
 
         test_file.close()
         test_result_file.close()

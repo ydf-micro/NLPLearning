@@ -13,4 +13,3 @@ test_gold_path = '../../data/msr_test_gold.utf8'
 punctuation = ['、', '”', '“', '。', '（', '）', '：', '《', '》', '；', '！', '，', '、', '…']
 
 span = 12  #max word length
-
