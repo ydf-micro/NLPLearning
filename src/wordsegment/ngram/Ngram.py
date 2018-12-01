@@ -70,7 +70,7 @@ class Ngram():
         print('训练集词表：', len(self.__WordDict))
         print('2-gram词表：', len(self.__NextDict))
 
-    def PreProcessint(self, line, sentListcnt, SpecialDict):
+    def PreProcessing(self, line, sentListcnt, SpecialDict):
         '''
         预处理
         :return:
@@ -130,7 +130,7 @@ class Ngram():
             line = line.strip()
             tmp_words = ''
 
-            sentList, sentListcnt, SpecialDict = self.PreProcessint(line, sentListcnt, SpecialDict)
+            sentList, sentListcnt, SpecialDict = self.PreProcessing(line, sentListcnt, SpecialDict)
 
             for sent in sentList:
                 if sent not in punctuation and sent not in SpecialDict:

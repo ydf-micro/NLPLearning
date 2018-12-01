@@ -46,9 +46,9 @@ class Evaluate():
         print('\n命中{}个'.format(self.right_cnt))
         print('分词结果{}个'.format(self.result_cnt))
         print('标准结果{}个'.format(self.gold_cnt))
-        print('查准率为：', P)
-        print('查全率为：', R)
-        print('F1为：', F1)
+        print('查准率为：{:%}'.format(P))
+        print('查全率为：{:%}'.format(R))
+        print('F1为：{:%}'.format(F1))
         print('\n')
 
 if __name__ == '__main__':
