@@ -59,14 +59,14 @@ class PreProcess(object):
         return data_X, np.array(data_Y)
 
     #以word2Vec的方式将词向量化
-    def toword2Vec(self, data_X):
+    def toword2Vec(self, data_X, embedding_size = 128):
         if os.path.exists(w2vmodel_path) == False:
             logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-            w2vmodel = w2v.Word2Vec(data_X, sg=1, size=5,  window=3,  min_count=5,  negative=3, sample=0.001, hs=1, workers=4)
+            w2vmodel = w2v.Word2Vec(data_X, sg=1, size=embedding_size,  window=3,  min_count=5,  negative=3, sample=0.001, hs=1, workers=4)
             w2vmodel.save(w2vmodel_path)
         w2vmodel = w2v.Word2Vec.load(w2vmodel_path)
         data_X_ndarray = np.array(data_X)
-        data_X_w2v = np.zeros((data_X_ndarray.shape[0], data_X_ndarray.shape[1], 5), dtype=float)
+        data_X_w2v = np.zeros((data_X_ndarray.shape[0], data_X_ndarray.shape[1], embedding_size), dtype=float)
         for i in range(data_X_ndarray.shape[0]):
             for j in range(data_X_ndarray.shape[1]):
                 if data_X_ndarray[i, j] in w2vmodel:
@@ -76,12 +76,34 @@ class PreProcess(object):
     def data_preprocess(self, path):
         data, stopwords_list = self.load_data(path)
         data_X, data_Y = self.del_valid_word(data, stopwords_list)
-        data_X_w2v = self.toword2Vec(data_X)
+        data_X_w2v = self.toword2Vec(data_X, )
 
         return data_X_w2v, data_Y
+
+    def batch_iter(self, data, batch_size, num_epochs, shuffle=True):
+        # generates a batch iterator for a dataset.
+        data = np.array(data)
+        data_size = len(data)
+        num_batches_per_epoch = int((len(data)-1)/batch_size) + 1
+        for epoch in range(num_epochs):
+            if shuffle:
+                shuffle_indices = np.random.permutation(np.arange(data_size))
+                shuffled_data = data[shuffle_indices]
+            else:
+                shuffled_data = data
+            for batch_num in range(num_batches_per_epoch):
+                start_index = batch_num * batch_size
+                end_index = min((batch_num + 1) * batch_size, data_size)
+                yield shuffled_data[start_index:end_index]
 
 if __name__ == '__main__':
     preprocess = PreProcess()
     data_X_w2v, data_Y = preprocess.data_preprocess(train_data_path)
     print(data_X_w2v)
     print(data_Y)
+    print(data_X_w2v.shape)
+    print(data_Y.shape)
+    print(len(data_Y))
+    print(len(list(zip(data_X_w2v, data_Y))))
+    print(data_Y)
+    print(np.argmax(data_Y, axis=1))
