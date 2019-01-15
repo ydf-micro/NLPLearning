@@ -85,7 +85,7 @@ class TextCNN(object):
             self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, 'float'), name='accuracy')
 
 if __name__ == '__main__':
-    preprocess = PreProcess()
-    data_X_w2v, data_Y = preprocess.data_preprocess(train_data_path)
-    print(data_X_w2v)
-    print(data_Y)
+    # preprocess = PreProcess()
+    # data_X_w2v, data_Y = preprocess.data_preprocess(train_data_path)
+    # print(data_X_w2v)
+    # print(data_Y)
